@@ -1,10 +1,10 @@
 const display = document.getElementById("display");
 
-function write(input){
+function appendToDisplay(input){
     display.value += input;
 }
 
-function clear(){
+function clearDisplay(){
     display.value = "";
 }
 
