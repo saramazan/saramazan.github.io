@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Moja Różowa Faktura</title>
     <style>
-        /* Stylowanie całej strony */
         * {
             margin: 0;
             padding: 0;
@@ -20,7 +19,6 @@
             color: #8a2d61;
         }
 
-        /* Główny kontener faktury */
         .faktura-box {
             max-width: 1000px;
             margin: 0 auto;
@@ -31,7 +29,6 @@
             overflow: hidden;
         }
 
-        /* Nagłówek */
         .naglowek {
             background: linear-gradient(135deg, #e83e8c, #d63384);
             color: white;
@@ -45,7 +42,6 @@
             text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
         }
 
-        /* Przyciski */
         .przyciski {
             display: flex;
             gap: 15px;
@@ -70,7 +66,6 @@
             transform: translateY(-2px);
         }
 
-        /* Sekcja z danymi */
         .dane-faktury {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -113,7 +108,6 @@
             background: white;
         }
 
-        /* Tabela z usługami */
         .tabela-uslug {
             padding: 0 30px 30px;
         }
@@ -172,7 +166,6 @@
             cursor: pointer;
         }
 
-        /* Suma całkowita */
         .suma-calkowita {
             text-align: right;
             padding: 20px 30px;
@@ -187,7 +180,6 @@
             font-size: 24px;
         }
 
-        /* Ukryty input plików */
         .ukryty-input {
             display: none;
         }
@@ -195,13 +187,11 @@
 </head>
 <body>
     <div class="faktura-box">
-        <!-- Nagłówek faktury -->
         <div class="naglowek">
             <h1>🩷 MOJA FAKTURA 🩷</h1>
             <p>System zarządzania fakturami</p>
         </div>
 
-        <!-- Przyciski akcji -->
         <div class="przyciski">
             <button class="przycisk" id="przyciskWczytaj">Wczytaj z XML</button>
             <button class="przycisk" id="przyciskZapisz">Zapisz do XML</button>
@@ -209,9 +199,7 @@
 
         <input type="file" id="inputPlik" class="ukryty-input" accept=".xml">
 
-        <!-- Dane faktury -->
         <div class="dane-faktury">
-            <!-- Lewa strona - Sprzedawca -->
             <div class="sekcja">
                 <h3> Dane Faktury</h3>
                 <div class="grupa-input">
@@ -228,7 +216,6 @@
                 </div>
             </div>
 
-            <!-- Prawa strona - Klient -->
             <div class="sekcja">
                 <h3> Dane Klienta</h3>
                 <div class="grupa-input">
@@ -245,7 +232,6 @@
                 </div>
             </div>
 
-            <!-- Sprzedawca -->
             <div class="sekcja">
                 <h3> Dane Sprzedawcy</h3>
                 <div class="grupa-input">
@@ -263,7 +249,6 @@
             </div>
         </div>
 
-        <!-- Lista usług -->
         <div class="tabela-uslug">
             <div class="naglowek-tabeli">
                 <div>Lp.</div>
@@ -274,10 +259,8 @@
                 <div>Akcje</div>
             </div>
 
-            <!-- Tutaj będą dodawane usługi -->
             <div id="listaUslug"></div>
 
-            <!-- Wiersz do dodawania nowych usług -->
             <div class="wiersz-dodawania">
                 <div></div>
                 <input type="text" id="nazwaNowejUslugi" placeholder="Wpisz nazwę usługi">
@@ -288,14 +271,12 @@
             </div>
         </div>
 
-        <!-- Suma całkowita -->
         <div class="suma-calkowita">
             Suma całkowita: <span class="kwota-suma" id="sumaCalkowita">0.00</span> PLN
         </div>
     </div>
 
     <script>
-        // ========== ZMIENNE ==========
         let numerKolejny = 1;
         const listaUslug = document.getElementById('listaUslug');
         const przyciskDodajUsluge = document.getElementById('przyciskDodajUsluge');
@@ -308,9 +289,7 @@
         const przyciskZapisz = document.getElementById('przyciskZapisz');
         const inputPlik = document.getElementById('inputPlik');
 
-        // ========== FUNKCJE ==========
 
-        // Oblicza wartość usługi (cena × ilość)
         function obliczWartosc() {
             const cena = parseFloat(cenaNowejUslugi.value) || 0;
             const ilosc = parseInt(iloscNowejUslugi.value) || 0;
@@ -318,7 +297,6 @@
             wartoscNowejUslugi.value = wartosc;
         }
 
-        // Dodaje nową usługę do listy
         function dodajUsluge() {
             const nazwa = nazwaNowejUslugi.value.trim();
             const cena = parseFloat(cenaNowejUslugi.value);
@@ -338,20 +316,16 @@
                     <button class="przycisk-usun">🗑️ Usuń</button>
                 `;
 
-                // Dodaje wiersz do listy
                 listaUslug.appendChild(nowyWiersz);
                 numerKolejny++;
 
-                // Czyści pola formularza
                 nazwaNowejUslugi.value = '';
                 cenaNowejUslugi.value = '';
                 iloscNowejUslugi.value = '';
                 wartoscNowejUslugi.value = '0.00';
 
-                // Aktualizuje sumę
                 obliczSumeCalkowita();
 
-                // Dodaje obsługę przycisku "Usuń"
                 nowyWiersz.querySelector('.przycisk-usun').addEventListener('click', function() {
                     nowyWiersz.remove();
                     poprawNumery();
@@ -363,7 +337,6 @@
             }
         }
 
-        // Poprawia numery LP po usunięciu wiersza
         function poprawNumery() {
             const wiersze = listaUslug.querySelectorAll('.wiersz-uslugi');
             numerKolejny = 1;
@@ -373,7 +346,6 @@
             });
         }
 
-        // Oblicza sumę wszystkich usług
         function obliczSumeCalkowita() {
             const wiersze = listaUslug.querySelectorAll('.wiersz-uslugi');
             let suma = 0;
@@ -386,33 +358,28 @@
             sumaCalkowita.textContent = suma.toFixed(2);
         }
 
-        // Tworzy XML z danych faktury
         function stworzXML() {
             let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
             xml += '<faktura>\n';
 
-            // Dane faktury
             xml += '  <daneFaktury>\n';
             xml += `    <numer>${document.getElementById('numerFaktury').value || ''}</numer>\n`;
             xml += `    <dataWystawienia>${document.getElementById('dataWystawienia').value || ''}</dataWystawienia>\n`;
             xml += `    <dataSprzedazy>${document.getElementById('dataSprzedazy').value || ''}</dataSprzedazy>\n`;
             xml += '  </daneFaktury>\n';
 
-            // Sprzedawca
             xml += '  <sprzedawca>\n';
             xml += `    <nazwa>${document.getElementById('nazwaSprzedawcy').value || ''}</nazwa>\n`;
             xml += `    <adres>${document.getElementById('adresSprzedawcy').value || ''}</adres>\n`;
             xml += `    <nip>${document.getElementById('nipSprzedawcy').value || ''}</nip>\n`;
             xml += '  </sprzedawca>\n';
 
-            // Klient
             xml += '  <klient>\n';
             xml += `    <nazwa>${document.getElementById('nazwaKlienta').value || ''}</nazwa>\n`;
             xml += `    <adres>${document.getElementById('adresKlienta').value || ''}</adres>\n`;
             xml += `    <nip>${document.getElementById('nipKlienta').value || ''}</nip>\n`;
             xml += '  </klient>\n';
 
-            // Usługi
             xml += '  <uslugi>\n';
             const wiersze = listaUslug.querySelectorAll('.wiersz-uslugi');
             wiersze.forEach(wiersz => {
@@ -429,7 +396,6 @@
             return xml;
         }
 
-        // Zapisuje XML do pliku
         function zapiszDoXML() {
             const zawartoscXML = stworzXML();
             const blob = new Blob([zawartoscXML], { type: 'application/xml' });
@@ -445,7 +411,6 @@
             alert(' Faktura została zapisana!');
         }
 
-        // Wczytuje dane z pliku XML
         function wczytajZXML(plik) {
             const czytnik = new FileReader();
             
@@ -454,7 +419,6 @@
                     const parser = new DOMParser();
                     const xmlDokument = parser.parseFromString(zdarzenie.target.result, 'application/xml');
 
-                    // Wczytuje dane faktury
                     document.getElementById('numerFaktury').value = 
                         xmlDokument.querySelector('numer')?.textContent || '';
                     document.getElementById('dataWystawienia').value = 
@@ -462,7 +426,6 @@
                     document.getElementById('dataSprzedazy').value = 
                         xmlDokument.querySelector('dataSprzedazy')?.textContent || '';
 
-                    // Wczytuje dane sprzedawcy
                     document.getElementById('nazwaSprzedawcy').value = 
                         xmlDokument.querySelector('sprzedawca > nazwa')?.textContent || '';
                     document.getElementById('adresSprzedawcy').value = 
@@ -470,7 +433,6 @@
                     document.getElementById('nipSprzedawcy').value = 
                         xmlDokument.querySelector('sprzedawca > nip')?.textContent || '';
 
-                    // Wczytuje dane klienta
                     document.getElementById('nazwaKlienta').value = 
                         xmlDokument.querySelector('klient > nazwa')?.textContent || '';
                     document.getElementById('adresKlienta').value = 
@@ -478,7 +440,6 @@
                     document.getElementById('nipKlienta').value = 
                         xmlDokument.querySelector('klient > nip')?.textContent || '';
 
-                    // Wczytuje usługi
                     listaUslug.innerHTML = '';
                     numerKolejny = 1;
 
@@ -523,31 +484,24 @@
             czytnik.readAsText(plik);
         }
 
-        // ========== OBSŁUGA ZDARZEŃ ==========
 
-        // Oblicza wartość przy zmianie ceny lub ilości
         cenaNowejUslugi.addEventListener('input', obliczWartosc);
         iloscNowejUslugi.addEventListener('input', obliczWartosc);
 
-        // Dodaje usługę po kliknięciu przycisku
         przyciskDodajUsluge.addEventListener('click', dodajUsluge);
 
-        // Obsługa przycisku wczytaj
         przyciskWczytaj.addEventListener('click', function() {
             inputPlik.click();
         });
 
-        // Obsługa wyboru pliku
         inputPlik.addEventListener('change', function(zdarzenie) {
             if (zdarzenie.target.files.length > 0) {
                 wczytajZXML(zdarzenie.target.files[0]);
             }
         });
 
-        // Obsługa przycisku zapisz
         przyciskZapisz.addEventListener('click', zapiszDoXML);
 
-        // Inicjalizacja
         obliczWartosc();
     </script>
 </body>
