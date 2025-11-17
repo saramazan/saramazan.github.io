@@ -3,50 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moja Faktura</title>
+    <title>Moja Różowa Faktura</title>
     <style>
+        /* Stylowanie całej strony */
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #ffe6f2;
-            color: #8a2d61;
+            background: linear-gradient(135deg, #ffe6f2, #ffd1e8);
+            min-height: 100vh;
             padding: 20px;
-            line-height: 1.5;
+            color: #8a2d61;
         }
 
-        .container {
-            max-width: 900px;
+        /* Główny kontener faktury */
+        .faktura-box {
+            max-width: 1000px;
             margin: 0 auto;
-            background-color: #fff0f7;
+            background: white;
             border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(214, 51, 132, 0.2);
+            border: 3px solid #ffb6d9;
+            overflow: hidden;
+        }
+
+        /* Nagłówek */
+        .naglowek {
+            background: linear-gradient(135deg, #e83e8c, #d63384);
+            color: white;
             padding: 25px;
-            box-shadow: 0 5px 15px rgba(214, 51, 132, 0.2);
-            border: 2px solid #ffb6d9;
-        }
-
-        h1 {
             text-align: center;
-            color: #d63384;
-            margin-bottom: 20px;
+        }
+
+        .naglowek h1 {
             font-size: 32px;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
         }
 
-        .buttons {
+        /* Przyciski */
+        .przyciski {
             display: flex;
-            justify-content: center;
             gap: 15px;
-            margin-bottom: 25px;
+            justify-content: center;
+            padding: 20px;
+            background: #fff0f7;
         }
 
-        .btn {
-            padding: 10px 20px;
-            background-color: #e83e8c;
+        .przycisk {
+            padding: 12px 25px;
+            background: #e83e8c;
             color: white;
             border: none;
             border-radius: 8px;
@@ -55,434 +65,490 @@
             transition: all 0.3s;
         }
 
-        .btn:hover {
-            background-color: #d63384;
+        .przycisk:hover {
+            background: #d63384;
             transform: translateY(-2px);
         }
 
-        .invoice-info {
+        /* Sekcja z danymi */
+        .dane-faktury {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 25px;
-            padding: 15px;
-            background-color: rgba(255, 240, 247, 0.7);
+            gap: 30px;
+            padding: 30px;
+            background: #fffafc;
+        }
+
+        .sekcja {
+            background: #fff0f7;
+            padding: 20px;
             border-radius: 10px;
-            border: 1px solid #ffb6d9;
+            border: 2px solid #ffd1e8;
         }
 
-        .info-group {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 10px;
+        .sekcja h3 {
+            color: #d63384;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #ffb6d9;
+            padding-bottom: 5px;
         }
 
-        label {
-            font-weight: bold;
+        .grupa-input {
+            margin-bottom: 15px;
+        }
+
+        .grupa-input label {
+            display: block;
             margin-bottom: 5px;
+            font-weight: bold;
             color: #a83773;
         }
 
-        input {
-            padding: 8px 12px;
-            border: 1px solid #ffb6d9;
-            border-radius: 5px;
-            background-color: rgba(255, 255, 255, 0.8);
-        }
-
-        .services-table {
+        .grupa-input input {
             width: 100%;
-            margin-bottom: 20px;
-            border-collapse: collapse;
+            padding: 10px;
+            border: 2px solid #ffb6d9;
+            border-radius: 6px;
+            font-size: 16px;
+            background: white;
         }
 
-        .table-header {
+        /* Tabela z usługami */
+        .tabela-uslug {
+            padding: 0 30px 30px;
+        }
+
+        .naglowek-tabeli {
             display: grid;
-            grid-template-columns: 50px 1fr 100px 80px 100px 80px;
-            gap: 10px;
-            padding: 10px;
-            background-color: #ffd1e8;
-            border-radius: 8px 8px 0 0;
+            grid-template-columns: 60px 1fr 120px 100px 120px 100px;
+            gap: 15px;
+            padding: 15px;
+            background: #ffd1e8;
             font-weight: bold;
+            border-radius: 8px 8px 0 0;
         }
 
-        .table-row {
+        .wiersz-uslugi {
             display: grid;
-            grid-template-columns: 50px 1fr 100px 80px 100px 80px;
-            gap: 10px;
-            padding: 10px;
-            border-bottom: 1px solid #ffb6d9;
+            grid-template-columns: 60px 1fr 120px 100px 120px 100px;
+            gap: 15px;
+            padding: 12px 15px;
+            border-bottom: 1px solid #ffd1e8;
             align-items: center;
         }
 
-        .add-service {
+        .wiersz-dodawania {
             display: grid;
-            grid-template-columns: 50px 1fr 100px 80px 100px 80px;
-            gap: 10px;
-            padding: 10px;
-            background-color: rgba(255, 240, 247, 0.7);
+            grid-template-columns: 60px 1fr 120px 100px 120px 100px;
+            gap: 15px;
+            padding: 15px;
+            background: #fffafc;
             border-radius: 0 0 8px 8px;
         }
 
-        .add-service input {
-            width: 100%;
+        .wiersz-dodawania input {
+            padding: 8px;
+            border: 2px solid #ffb6d9;
+            border-radius: 6px;
+            background: white;
         }
 
-        .add-btn {
-            background-color: #e83e8c;
+        .przycisk-dodaj {
+            background: #e83e8c;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
+            padding: 8px;
             cursor: pointer;
-            padding: 5px;
-        }
-
-        .delete-btn {
-            background-color: #c22574;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            padding: 5px;
-        }
-
-        .total {
-            text-align: right;
-            font-size: 18px;
             font-weight: bold;
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 2px solid #ffb6d9;
         }
 
-        .hidden {
+        .przycisk-usun {
+            background: #c22574;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 6px 12px;
+            cursor: pointer;
+        }
+
+        /* Suma całkowita */
+        .suma-calkowita {
+            text-align: right;
+            padding: 20px 30px;
+            font-size: 20px;
+            font-weight: bold;
+            background: #fff0f7;
+            border-top: 3px solid #ffb6d9;
+        }
+
+        .kwota-suma {
+            color: #d63384;
+            font-size: 24px;
+        }
+
+        /* Ukryty input plików */
+        .ukryty-input {
             display: none;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Moja Faktura</h1>
-        
-        <div class="buttons">
-            <button class="btn" id="loadBtn">Wczytaj z XML</button>
-            <button class="btn" id="saveBtn">Zapisz do XML</button>
+    <div class="faktura-box">
+        <!-- Nagłówek faktury -->
+        <div class="naglowek">
+            <h1>🩷 MOJA FAKTURA 🩷</h1>
+            <p>System zarządzania fakturami</p>
         </div>
-        
-        <input type="file" id="fileInput" class="hidden" accept=".xml">
-        
-        <div class="invoice-info">
-            <div class="left-column">
-                <div class="info-group">
-                    <label for="invoiceNumber">Numer faktury:</label>
-                    <input type="text" id="invoiceNumber">
+
+        <!-- Przyciski akcji -->
+        <div class="przyciski">
+            <button class="przycisk" id="przyciskWczytaj">Wczytaj z XML</button>
+            <button class="przycisk" id="przyciskZapisz">Zapisz do XML</button>
+        </div>
+
+        <input type="file" id="inputPlik" class="ukryty-input" accept=".xml">
+
+        <!-- Dane faktury -->
+        <div class="dane-faktury">
+            <!-- Lewa strona - Sprzedawca -->
+            <div class="sekcja">
+                <h3> Dane Faktury</h3>
+                <div class="grupa-input">
+                    <label for="numerFaktury">Numer faktury:</label>
+                    <input type="text" id="numerFaktury" placeholder="FV/2024/001">
                 </div>
-                
-                <div class="info-group">
-                    <label for="issueDate">Data wystawienia:</label>
-                    <input type="date" id="issueDate">
+                <div class="grupa-input">
+                    <label for="dataWystawienia">Data wystawienia:</label>
+                    <input type="date" id="dataWystawienia">
                 </div>
-                
-                <div class="info-group">
-                    <label for="saleDate">Data sprzedaży:</label>
-                    <input type="date" id="saleDate">
-                </div>
-                
-                <div class="info-group">
-                    <label for="seller">Sprzedawca:</label>
-                    <input type="text" id="seller">
-                </div>
-                
-                <div class="info-group">
-                    <label for="sellerAddress">Adres sprzedawcy:</label>
-                    <input type="text" id="sellerAddress">
-                </div>
-                
-                <div class="info-group">
-                    <label for="sellerNIP">NIP sprzedawcy:</label>
-                    <input type="text" id="sellerNIP">
+                <div class="grupa-input">
+                    <label for="dataSprzedazy">Data sprzedaży:</label>
+                    <input type="date" id="dataSprzedazy">
                 </div>
             </div>
-            
-            <div class="right-column">
-                <div class="info-group">
-                    <label for="client">Klient:</label>
-                    <input type="text" id="client">
+
+            <!-- Prawa strona - Klient -->
+            <div class="sekcja">
+                <h3> Dane Klienta</h3>
+                <div class="grupa-input">
+                    <label for="nazwaKlienta">Nazwa klienta:</label>
+                    <input type="text" id="nazwaKlienta" placeholder="Imię i nazwisko lub firma">
                 </div>
-                
-                <div class="info-group">
-                    <label for="clientAddress">Adres klienta:</label>
-                    <input type="text" id="clientAddress">
+                <div class="grupa-input">
+                    <label for="adresKlienta">Adres klienta:</label>
+                    <input type="text" id="adresKlienta" placeholder="Ulica, kod pocztowy, miasto">
                 </div>
-                
-                <div class="info-group">
-                    <label for="clientNIP">NIP klienta:</label>
-                    <input type="text" id="clientNIP">
+                <div class="grupa-input">
+                    <label for="nipKlienta">NIP klienta:</label>
+                    <input type="text" id="nipKlienta" placeholder="1234567890">
+                </div>
+            </div>
+
+            <!-- Sprzedawca -->
+            <div class="sekcja">
+                <h3> Dane Sprzedawcy</h3>
+                <div class="grupa-input">
+                    <label for="nazwaSprzedawcy">Nazwa sprzedawcy:</label>
+                    <input type="text" id="nazwaSprzedawcy" placeholder="Nazwa firmy">
+                </div>
+                <div class="grupa-input">
+                    <label for="adresSprzedawcy">Adres sprzedawcy:</label>
+                    <input type="text" id="adresSprzedawcy" placeholder="Ulica, kod pocztowy, miasto">
+                </div>
+                <div class="grupa-input">
+                    <label for="nipSprzedawcy">NIP sprzedawcy:</label>
+                    <input type="text" id="nipSprzedawcy" placeholder="0987654321">
                 </div>
             </div>
         </div>
-        
-        <div class="services">
-            <div class="table-header">
+
+        <!-- Lista usług -->
+        <div class="tabela-uslug">
+            <div class="naglowek-tabeli">
                 <div>Lp.</div>
                 <div>Nazwa usługi</div>
-                <div>Cena</div>
+                <div>Cena (PLN)</div>
                 <div>Ilość</div>
-                <div>Wartość</div>
+                <div>Wartość (PLN)</div>
                 <div>Akcje</div>
             </div>
-            
-            <div id="servicesList"></div>
-            
-            <div class="add-service">
+
+            <!-- Tutaj będą dodawane usługi -->
+            <div id="listaUslug"></div>
+
+            <!-- Wiersz do dodawania nowych usług -->
+            <div class="wiersz-dodawania">
                 <div></div>
-                <input type="text" id="serviceName" placeholder="Nazwa usługi">
-                <input type="number" id="servicePrice" placeholder="0.00" min="0" step="0.01">
-                <input type="number" id="serviceQuantity" placeholder="1" min="1">
-                <input type="text" id="serviceTotal" placeholder="0.00" readonly>
-                <button class="add-btn" id="addServiceBtn">Dodaj</button>
+                <input type="text" id="nazwaNowejUslugi" placeholder="Wpisz nazwę usługi">
+                <input type="number" id="cenaNowejUslugi" placeholder="0.00" min="0" step="0.01">
+                <input type="number" id="iloscNowejUslugi" placeholder="1" min="1">
+                <input type="text" id="wartoscNowejUslugi" placeholder="0.00" readonly>
+                <button class="przycisk-dodaj" id="przyciskDodajUsluge">➕ Dodaj</button>
             </div>
-            
-            <div class="total">
-                Razem: <span id="totalAmount">0.00</span> PLN
-            </div>
+        </div>
+
+        <!-- Suma całkowita -->
+        <div class="suma-calkowita">
+            Suma całkowita: <span class="kwota-suma" id="sumaCalkowita">0.00</span> PLN
         </div>
     </div>
 
     <script>
-        // Proste nazwy zmiennych
-        let nextId = 1;
-        const servicesList = document.getElementById('servicesList');
-        const addServiceBtn = document.getElementById('addServiceBtn');
-        const serviceName = document.getElementById('serviceName');
-        const servicePrice = document.getElementById('servicePrice');
-        const serviceQuantity = document.getElementById('serviceQuantity');
-        const serviceTotal = document.getElementById('serviceTotal');
-        const totalAmount = document.getElementById('totalAmount');
-        const loadBtn = document.getElementById('loadBtn');
-        const saveBtn = document.getElementById('saveBtn');
-        const fileInput = document.getElementById('fileInput');
+        // ========== ZMIENNE ==========
+        let numerKolejny = 1;
+        const listaUslug = document.getElementById('listaUslug');
+        const przyciskDodajUsluge = document.getElementById('przyciskDodajUsluge');
+        const nazwaNowejUslugi = document.getElementById('nazwaNowejUslugi');
+        const cenaNowejUslugi = document.getElementById('cenaNowejUslugi');
+        const iloscNowejUslugi = document.getElementById('iloscNowejUslugi');
+        const wartoscNowejUslugi = document.getElementById('wartoscNowejUslugi');
+        const sumaCalkowita = document.getElementById('sumaCalkowita');
+        const przyciskWczytaj = document.getElementById('przyciskWczytaj');
+        const przyciskZapisz = document.getElementById('przyciskZapisz');
+        const inputPlik = document.getElementById('inputPlik');
 
-        // Obliczanie wartości usługi
-        function calculateTotal() {
-            const price = parseFloat(servicePrice.value) || 0;
-            const quantity = parseInt(serviceQuantity.value) || 0;
-            const total = (price * quantity).toFixed(2);
-            serviceTotal.value = total;
+        // ========== FUNKCJE ==========
+
+        // Oblicza wartość usługi (cena × ilość)
+        function obliczWartosc() {
+            const cena = parseFloat(cenaNowejUslugi.value) || 0;
+            const ilosc = parseInt(iloscNowejUslugi.value) || 0;
+            const wartosc = (cena * ilosc).toFixed(2);
+            wartoscNowejUslugi.value = wartosc;
         }
 
-        // Dodawanie nowej usługi
-        function addService() {
-            const name = serviceName.value.trim();
-            const price = parseFloat(servicePrice.value);
-            const quantity = parseInt(serviceQuantity.value);
-            const total = parseFloat(serviceTotal.value);
+        // Dodaje nową usługę do listy
+        function dodajUsluge() {
+            const nazwa = nazwaNowejUslugi.value.trim();
+            const cena = parseFloat(cenaNowejUslugi.value);
+            const ilosc = parseInt(iloscNowejUslugi.value);
+            const wartosc = parseFloat(wartoscNowejUslugi.value);
 
-            if (name && price > 0 && quantity > 0) {
-                const serviceRow = document.createElement('div');
-                serviceRow.className = 'table-row';
-                serviceRow.innerHTML = `
-                    <div>${nextId}.</div>
-                    <div>${name}</div>
-                    <div>${price.toFixed(2)}</div>
-                    <div>${quantity}</div>
-                    <div>${total.toFixed(2)}</div>
-                    <button class="delete-btn">Usuń</button>
+            if (nazwa && cena > 0 && ilosc > 0) {
+                // Tworzy nowy wiersz
+                const nowyWiersz = document.createElement('div');
+                nowyWiersz.className = 'wiersz-uslugi';
+                nowyWiersz.innerHTML = `
+                    <div>${numerKolejny}.</div>
+                    <div>${nazwa}</div>
+                    <div>${cena.toFixed(2)}</div>
+                    <div>${ilosc}</div>
+                    <div>${wartosc.toFixed(2)}</div>
+                    <button class="przycisk-usun">🗑️ Usuń</button>
                 `;
-                
-                servicesList.appendChild(serviceRow);
-                nextId++;
-                
-                // Czyszczenie pól
-                serviceName.value = '';
-                servicePrice.value = '';
-                serviceQuantity.value = '';
-                serviceTotal.value = '0.00';
-                
-                // Aktualizacja sumy
-                updateTotal();
-                
-                // Dodanie obsługi przycisku usuń
-                serviceRow.querySelector('.delete-btn').addEventListener('click', function() {
-                    serviceRow.remove();
-                    updateNumbers();
-                    updateTotal();
+
+                // Dodaje wiersz do listy
+                listaUslug.appendChild(nowyWiersz);
+                numerKolejny++;
+
+                // Czyści pola formularza
+                nazwaNowejUslugi.value = '';
+                cenaNowejUslugi.value = '';
+                iloscNowejUslugi.value = '';
+                wartoscNowejUslugi.value = '0.00';
+
+                // Aktualizuje sumę
+                obliczSumeCalkowita();
+
+                // Dodaje obsługę przycisku "Usuń"
+                nowyWiersz.querySelector('.przycisk-usun').addEventListener('click', function() {
+                    nowyWiersz.remove();
+                    poprawNumery();
+                    obliczSumeCalkowita();
                 });
+
             } else {
-                alert('Proszę wypełnić wszystkie pola poprawnie!');
+                alert(' Proszę wypełnić wszystkie pola poprawnie!');
             }
         }
 
-        // Aktualizacja numerów LP
-        function updateNumbers() {
-            const rows = servicesList.querySelectorAll('.table-row');
-            nextId = 1;
-            rows.forEach(row => {
-                row.querySelector('div:first-child').textContent = nextId + '.';
-                nextId++;
+        // Poprawia numery LP po usunięciu wiersza
+        function poprawNumery() {
+            const wiersze = listaUslug.querySelectorAll('.wiersz-uslugi');
+            numerKolejny = 1;
+            wiersze.forEach(wiersz => {
+                wiersz.querySelector('div:first-child').textContent = numerKolejny + '.';
+                numerKolejny++;
             });
         }
 
-        // Aktualizacja sumy całkowitej
-        function updateTotal() {
-            const rows = servicesList.querySelectorAll('.table-row');
-            let total = 0;
-            
-            rows.forEach(row => {
-                const amount = parseFloat(row.querySelector('div:nth-child(5)').textContent);
-                total += amount;
+        // Oblicza sumę wszystkich usług
+        function obliczSumeCalkowita() {
+            const wiersze = listaUslug.querySelectorAll('.wiersz-uslugi');
+            let suma = 0;
+
+            wiersze.forEach(wiersz => {
+                const kwota = parseFloat(wiersz.querySelector('div:nth-child(5)').textContent);
+                suma += kwota;
             });
-            
-            totalAmount.textContent = total.toFixed(2);
+
+            sumaCalkowita.textContent = suma.toFixed(2);
         }
 
-        // Tworzenie XML
-        function createXML() {
+        // Tworzy XML z danych faktury
+        function stworzXML() {
             let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
             xml += '<faktura>\n';
-            
+
             // Dane faktury
-            xml += '  <dane>\n';
-            xml += `    <numer>${document.getElementById('invoiceNumber').value || ''}</numer>\n`;
-            xml += `    <dataWystawienia>${document.getElementById('issueDate').value || ''}</dataWystawienia>\n`;
-            xml += `    <dataSprzedazy>${document.getElementById('saleDate').value || ''}</dataSprzedazy>\n`;
-            xml += '  </dane>\n';
-            
+            xml += '  <daneFaktury>\n';
+            xml += `    <numer>${document.getElementById('numerFaktury').value || ''}</numer>\n`;
+            xml += `    <dataWystawienia>${document.getElementById('dataWystawienia').value || ''}</dataWystawienia>\n`;
+            xml += `    <dataSprzedazy>${document.getElementById('dataSprzedazy').value || ''}</dataSprzedazy>\n`;
+            xml += '  </daneFaktury>\n';
+
             // Sprzedawca
             xml += '  <sprzedawca>\n';
-            xml += `    <nazwa>${document.getElementById('seller').value || ''}</nazwa>\n`;
-            xml += `    <adres>${document.getElementById('sellerAddress').value || ''}</adres>\n`;
-            xml += `    <nip>${document.getElementById('sellerNIP').value || ''}</nip>\n`;
+            xml += `    <nazwa>${document.getElementById('nazwaSprzedawcy').value || ''}</nazwa>\n`;
+            xml += `    <adres>${document.getElementById('adresSprzedawcy').value || ''}</adres>\n`;
+            xml += `    <nip>${document.getElementById('nipSprzedawcy').value || ''}</nip>\n`;
             xml += '  </sprzedawca>\n';
-            
+
             // Klient
             xml += '  <klient>\n';
-            xml += `    <nazwa>${document.getElementById('client').value || ''}</nazwa>\n`;
-            xml += `    <adres>${document.getElementById('clientAddress').value || ''}</adres>\n`;
-            xml += `    <nip>${document.getElementById('clientNIP').value || ''}</nip>\n`;
+            xml += `    <nazwa>${document.getElementById('nazwaKlienta').value || ''}</nazwa>\n`;
+            xml += `    <adres>${document.getElementById('adresKlienta').value || ''}</adres>\n`;
+            xml += `    <nip>${document.getElementById('nipKlienta').value || ''}</nip>\n`;
             xml += '  </klient>\n';
-            
+
             // Usługi
             xml += '  <uslugi>\n';
-            const rows = servicesList.querySelectorAll('.table-row');
-            rows.forEach(row => {
+            const wiersze = listaUslug.querySelectorAll('.wiersz-uslugi');
+            wiersze.forEach(wiersz => {
                 xml += '    <usluga>\n';
-                xml += `      <nazwa>${row.querySelector('div:nth-child(2)').textContent}</nazwa>\n`;
-                xml += `      <cena>${row.querySelector('div:nth-child(3)').textContent}</cena>\n`;
-                xml += `      <ilosc>${row.querySelector('div:nth-child(4)').textContent}</ilosc>\n`;
-                xml += `      <wartosc>${row.querySelector('div:nth-child(5)').textContent}</wartosc>\n`;
+                xml += `      <nazwa>${wiersz.querySelector('div:nth-child(2)').textContent}</nazwa>\n`;
+                xml += `      <cena>${wiersz.querySelector('div:nth-child(3)').textContent}</cena>\n`;
+                xml += `      <ilosc>${wiersz.querySelector('div:nth-child(4)').textContent}</ilosc>\n`;
+                xml += `      <wartosc>${wiersz.querySelector('div:nth-child(5)').textContent}</wartosc>\n`;
                 xml += '    </usluga>\n';
             });
             xml += '  </uslugi>\n';
-            
+
             xml += '</faktura>';
             return xml;
         }
 
-        // Zapisywanie do XML
-        function saveToXML() {
-            const xmlContent = createXML();
-            const blob = new Blob([xmlContent], { type: 'application/xml' });
+        // Zapisuje XML do pliku
+        function zapiszDoXML() {
+            const zawartoscXML = stworzXML();
+            const blob = new Blob([zawartoscXML], { type: 'application/xml' });
             const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'faktura.xml';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'moja_faktura.xml';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
             URL.revokeObjectURL(url);
+            
+            alert(' Faktura została zapisana!');
         }
 
-        // Wczytywanie z XML
-        function loadFromXML(file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
+        // Wczytuje dane z pliku XML
+        function wczytajZXML(plik) {
+            const czytnik = new FileReader();
+            
+            czytnik.onload = function(zdarzenie) {
                 try {
                     const parser = new DOMParser();
-                    const xmlDoc = parser.parseFromString(e.target.result, 'application/xml');
+                    const xmlDokument = parser.parseFromString(zdarzenie.target.result, 'application/xml');
+
+                    // Wczytuje dane faktury
+                    document.getElementById('numerFaktury').value = 
+                        xmlDokument.querySelector('numer')?.textContent || '';
+                    document.getElementById('dataWystawienia').value = 
+                        xmlDokument.querySelector('dataWystawienia')?.textContent || '';
+                    document.getElementById('dataSprzedazy').value = 
+                        xmlDokument.querySelector('dataSprzedazy')?.textContent || '';
+
+                    // Wczytuje dane sprzedawcy
+                    document.getElementById('nazwaSprzedawcy').value = 
+                        xmlDokument.querySelector('sprzedawca > nazwa')?.textContent || '';
+                    document.getElementById('adresSprzedawcy').value = 
+                        xmlDokument.querySelector('sprzedawca > adres')?.textContent || '';
+                    document.getElementById('nipSprzedawcy').value = 
+                        xmlDokument.querySelector('sprzedawca > nip')?.textContent || '';
+
+                    // Wczytuje dane klienta
+                    document.getElementById('nazwaKlienta').value = 
+                        xmlDokument.querySelector('klient > nazwa')?.textContent || '';
+                    document.getElementById('adresKlienta').value = 
+                        xmlDokument.querySelector('klient > adres')?.textContent || '';
+                    document.getElementById('nipKlienta').value = 
+                        xmlDokument.querySelector('klient > nip')?.textContent || '';
+
+                    // Wczytuje usługi
+                    listaUslug.innerHTML = '';
+                    numerKolejny = 1;
+
+                    const uslugi = xmlDokument.querySelectorAll('usluga');
                     
-                    // Wczytywanie danych faktury
-                    document.getElementById('invoiceNumber').value = 
-                        xmlDoc.querySelector('numer')?.textContent || '';
-                    document.getElementById('issueDate').value = 
-                        xmlDoc.querySelector('dataWystawienia')?.textContent || '';
-                    document.getElementById('saleDate').value = 
-                        xmlDoc.querySelector('dataSprzedazy')?.textContent || '';
-                    
-                    // Wczytywanie danych sprzedawcy
-                    document.getElementById('seller').value = 
-                        xmlDoc.querySelector('sprzedawca > nazwa')?.textContent || '';
-                    document.getElementById('sellerAddress').value = 
-                        xmlDoc.querySelector('sprzedawca > adres')?.textContent || '';
-                    document.getElementById('sellerNIP').value = 
-                        xmlDoc.querySelector('sprzedawca > nip')?.textContent || '';
-                    
-                    // Wczytywanie danych klienta
-                    document.getElementById('client').value = 
-                        xmlDoc.querySelector('klient > nazwa')?.textContent || '';
-                    document.getElementById('clientAddress').value = 
-                        xmlDoc.querySelector('klient > adres')?.textContent || '';
-                    document.getElementById('clientNIP').value = 
-                        xmlDoc.querySelector('klient > nip')?.textContent || '';
-                    
-                    // Wczytywanie usług
-                    servicesList.innerHTML = '';
-                    nextId = 1;
-                    
-                    const services = xmlDoc.querySelectorAll('usluga');
-                    services.forEach(service => {
-                        const name = service.querySelector('nazwa')?.textContent || '';
-                        const price = parseFloat(service.querySelector('cena')?.textContent) || 0;
-                        const quantity = parseInt(service.querySelector('ilosc')?.textContent) || 0;
-                        const value = parseFloat(service.querySelector('wartosc')?.textContent) || 0;
-                        
-                        const serviceRow = document.createElement('div');
-                        serviceRow.className = 'table-row';
-                        serviceRow.innerHTML = `
-                            <div>${nextId}.</div>
-                            <div>${name}</div>
-                            <div>${price.toFixed(2)}</div>
-                            <div>${quantity}</div>
-                            <div>${value.toFixed(2)}</div>
-                            <button class="delete-btn">Usuń</button>
+                    uslugi.forEach(usluga => {
+                        const nazwa = usluga.querySelector('nazwa')?.textContent || 'Brak nazwy';
+                        const cena = parseFloat(usluga.querySelector('cena')?.textContent) || 0;
+                        const ilosc = parseInt(usluga.querySelector('ilosc')?.textContent) || 0;
+                        const wartosc = parseFloat(usluga.querySelector('wartosc')?.textContent) || 0;
+
+                        const nowyWiersz = document.createElement('div');
+                        nowyWiersz.className = 'wiersz-uslugi';
+                        nowyWiersz.innerHTML = `
+                            <div>${numerKolejny}.</div>
+                            <div>${nazwa}</div>
+                            <div>${cena.toFixed(2)}</div>
+                            <div>${ilosc}</div>
+                            <div>${wartosc.toFixed(2)}</div>
+                            <button class="przycisk-usun">🗑️ Usuń</button>
                         `;
-                        
-                        servicesList.appendChild(serviceRow);
-                        nextId++;
-                        
-                        serviceRow.querySelector('.delete-btn').addEventListener('click', function() {
-                            serviceRow.remove();
-                            updateNumbers();
-                            updateTotal();
+
+                        listaUslug.appendChild(nowyWiersz);
+                        numerKolejny++;
+
+                        nowyWiersz.querySelector('.przycisk-usun').addEventListener('click', function() {
+                            nowyWiersz.remove();
+                            poprawNumery();
+                            obliczSumeCalkowita();
                         });
                     });
-                    
-                    updateTotal();
-                    alert('Faktura została wczytana pomyślnie!');
-                } catch (error) {
-                    alert('Wystąpił błąd podczas wczytywania pliku XML.');
-                    console.error(error);
+
+                    obliczSumeCalkowita();
+                    alert(` Faktura wczytana! Załadowano ${uslugi.length} usług.`);
+
+                } catch (blad) {
+                    console.error('Błąd:', blad);
+                    alert(' Błąd podczas wczytywania pliku XML!');
                 }
             };
-            reader.readAsText(file);
+
+            czytnik.readAsText(plik);
         }
 
-        // Nasłuchiwanie zdarzeń
-        servicePrice.addEventListener('input', calculateTotal);
-        serviceQuantity.addEventListener('input', calculateTotal);
-        addServiceBtn.addEventListener('click', addService);
-        
-        loadBtn.addEventListener('click', function() {
-            fileInput.click();
+        // ========== OBSŁUGA ZDARZEŃ ==========
+
+        // Oblicza wartość przy zmianie ceny lub ilości
+        cenaNowejUslugi.addEventListener('input', obliczWartosc);
+        iloscNowejUslugi.addEventListener('input', obliczWartosc);
+
+        // Dodaje usługę po kliknięciu przycisku
+        przyciskDodajUsluge.addEventListener('click', dodajUsluge);
+
+        // Obsługa przycisku wczytaj
+        przyciskWczytaj.addEventListener('click', function() {
+            inputPlik.click();
         });
-        
-        fileInput.addEventListener('change', function(e) {
-            if (e.target.files.length > 0) {
-                loadFromXML(e.target.files[0]);
+
+        // Obsługa wyboru pliku
+        inputPlik.addEventListener('change', function(zdarzenie) {
+            if (zdarzenie.target.files.length > 0) {
+                wczytajZXML(zdarzenie.target.files[0]);
             }
         });
-        
-        saveBtn.addEventListener('click', saveToXML);
+
+        // Obsługa przycisku zapisz
+        przyciskZapisz.addEventListener('click', zapiszDoXML);
+
+        // Inicjalizacja
+        obliczWartosc();
     </script>
 </body>
 </html>
